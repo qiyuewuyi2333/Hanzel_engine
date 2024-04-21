@@ -4,6 +4,7 @@
 // supply the client the application template and at the sametime allow the client to create own
 // application
 #include <hanzel/Application.h>
+#include <hanzel/Log.h>
 
 /**
  * ENTRY POINT

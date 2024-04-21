@@ -13,4 +13,5 @@ target_link_libraries(application PRIVATE ${CMAKE_LIBRARY_DIRECTORY}/hanzel)
 # Hanzel.h, which includes the head files in hanzel dir, that's mean if we just include the for_client, 
 # the Hanzel.h that we link to our this project will not find the hanzel/Application.h file.
 # Thar's it. Easy but not easy to find.
-target_include_directories(application PRIVATE ../hanzel/include/)
+target_include_directories(application PRIVATE ../hanzel/include)
+target_include_directories(application PRIVATE ../hanzel/vendor/spdlog/include)
