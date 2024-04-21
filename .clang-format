@@ -1,0 +1,11 @@
+---
+Language:        Cpp
+BasedOnStyle:  Microsoft
+
+SortIncludes:  false
+AlwaysBreakTemplateDeclarations: true
+PointerAlignment : Left
+ReferenceAlignment: Pointer
+ColumnLimit: 100
+AlignArrayOfStructures: Right
+BreakArrays: false

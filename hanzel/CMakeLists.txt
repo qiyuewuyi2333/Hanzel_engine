@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.0.0)
+project(hanzel VERSION 0.1.0 LANGUAGES C CXX)
+
+set(CMAKE_CXX_STANDARD 20)
+SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ../../libs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set(LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+set( OUTPUT_NAME ${PROJECT_NAME})
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS on)
+
+file(GLOB src_files CONFIGURE_DEPENDS src/*.cpp)
+
+add_library(${PROJECT_NAME} SHARED ${src_files} )
+
+target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_compile_definitions(${PROJECT_NAME} PRIVATE HZ_PLATFORM_WINDOWS)
+target_compile_definitions(${PROJECT_NAME} PRIVATE HZ_BUILD_DLL)
+
+SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX
+       
+        PREFIX "")
+
+file(GLOB DLL_FILES CONFIGURE_DEPENDS ../libs/*.dll)
+message(${CMAKE_SOURCE_DIR}/../application/build)
+
+# 遍历所有 DLL 文件并创建复制命令
+foreach(DLL_FILE ${DLL_FILES})
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${DLL_FILE} 
+       ${CMAKE_CURRENT_SOURCE_DIR}/../application/build)
+endforeach()
